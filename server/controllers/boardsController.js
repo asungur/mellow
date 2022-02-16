@@ -27,5 +27,20 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const getBoard = (req, res, next) => {
+  const id = req.params.id;
+  Board.findById(id)
+    .populate({ 
+      path: 'lists', 
+      populate: { path: 'cards' }})
+    .exec((err, board) => {
+      if (!board) {
+        next(new HttpError("Invalid board id provided", 404));
+      }
+      res.json(board);
+    });
+};
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
+exports.getBoard = getBoard;
