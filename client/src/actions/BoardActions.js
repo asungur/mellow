@@ -19,14 +19,14 @@ export function createBoardSuccess(board) {
 
 export function fetchBoards() {
   return function(dispatch) {
-    dispatch(fetchBoardsRequest());
+    // dispatch(fetchBoardsRequest()); --> can use if you want to implement spinner
     apiClient.getBoards(data => dispatch(fetchBoardsSuccess(data.boards)));
   };
 }
 
 export function createBoard(board, callback) {
   return function(dispatch) {
-    dispatch(createBoardRequest());
+    // dispatch(createBoardRequest());
     apiClient.createBoard(board, data => {
       dispatch(createBoardSuccess(data.board));
 
@@ -35,4 +35,15 @@ export function createBoard(board, callback) {
       }
     });
   };
+}
+
+export function getBoard(id, callback) {
+  return (dispatch) => {
+    apiClient.getBoard(id, (data) => {
+      console.log('data', data)
+      dispatch({ type: "GET_BOARD_SUCCESS", board: data})
+
+      if (callback) {callback(data)}
+    })
+  }
 }

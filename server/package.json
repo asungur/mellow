@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "react-error-overlay": "^6.0.9"
   }
 }

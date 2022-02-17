@@ -23,7 +23,7 @@ const CardSchema = new Schema({
     required: [true, 'The List ID is required']
   },
   position: {
-    type: Schema.Types.Decimal128,
+    type: Number,
   },
   commentsCount: Number,
 }, {timestamps: true})
