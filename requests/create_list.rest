@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/lists/
+Content-Type: application/json
+
+{
+  "list": {
+    "title": "its mine", "position": 1, "boardId": "620e7eacd7c1aa2580b5b791", "cards": []
+  }
+}
