@@ -3,6 +3,6 @@ Content-Type: application/json
 
 {
   "list": {
-    "title": "its mine", "position": 1, "boardId": "620e7eacd7c1aa2580b5b791", "cards": []
+    "title": "testing board update from list35", "position": 2, "boardId": "620e7eacd7c1aa2580b5b791"
   }
 }

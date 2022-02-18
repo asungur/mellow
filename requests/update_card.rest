@@ -1,0 +1,8 @@
+PUT http://localhost:3001/api/cards/620d4c2f63249044764d2cc2
+Content-Type: application/json
+
+{
+  "card": {
+    "title": "backend test105"
+  }
+}
