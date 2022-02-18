@@ -40,7 +40,6 @@ export function createBoard(board, callback) {
 export function getBoard(id, callback) {
   return (dispatch) => {
     apiClient.getBoard(id, (data) => {
-      console.log('data', data)
       dispatch({ type: "GET_BOARD_SUCCESS", board: data})
 
       if (callback) {callback(data)}

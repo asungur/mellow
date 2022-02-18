@@ -112,7 +112,7 @@ const SingleBoard = () => {
                       type="text"
                       className="list-title"
                       value="List title during editing"
-                      autoFocus="true"
+                      autoFocus={true}
                     />
                   </div>
                   <div className="add-dropdown add-top">

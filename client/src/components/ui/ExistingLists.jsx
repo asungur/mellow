@@ -2,20 +2,19 @@ import React from "react";
 import { useSelector } from "react-redux";
 import List from "./List";
 
-const ExistingLists = ({ id }) => {
+const ExistingLists = ({ boardId }) => {
   const lists = useSelector((state) => {
-    return state.lists.filter((list) => list.boardId === id)
+    return state.lists.filter((list) => list.boardId === boardId)
   })
 
   return (
     <>
-    {lists.map(list => 
-      <List
-        key={list._id}
-        id={list._id}
-        title={list.title}
-      />
-    )}
+      {lists.map(list =>
+        <List
+          key={list._id}
+          list={list}
+        />
+      )}
     </>
   )
 };

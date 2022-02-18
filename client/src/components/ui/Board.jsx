@@ -26,9 +26,8 @@ const Board = () => {
     return (
       <>
         <header>
-          <h1>Test hello {board._id}</h1>
           <ul>
-            <li id="title">My Title</li>
+            <li id="title">{board.title}</li>
             <li className="star-icon icon"></li>
             <li className="private private-icon icon">Private</li>
           </ul>
@@ -42,7 +41,7 @@ const Board = () => {
         <main>
           <div id="list-container" className="list-container">
             <div id="existing-lists" className="existing-lists">
-              <ExistingLists id={id}/>
+              <ExistingLists boardId={id}/>
             </div>
             <div id="new-list" className="new-list">
               <span>Add a list...</span>
