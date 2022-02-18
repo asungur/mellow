@@ -16,4 +16,6 @@ router.get('/test', testController.test);
 
 router.post('/lists', validateList, listsController.createList);
 
+router.put('/lists/:id', validateList, listsController.updateList);
+
 module.exports = router;
