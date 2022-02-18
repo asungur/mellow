@@ -1,0 +1,8 @@
+POST http://localhost:5000/api/cards/
+Content-Type: application/json
+
+{
+  "card": {
+    "title": "Don't touch me", "position": 1, "boardId": "620e7eacd7c1aa2580b5b791", "label": [], "listId": "620fd87946404c103027520d" 
+  }
+}
