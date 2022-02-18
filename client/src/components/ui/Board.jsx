@@ -31,14 +31,23 @@ const Board = () => {
     setNewListTitle(e.target.value);
   }
 
+  const toggleAddAList = () => {
+    setAddAListDisplayed(!addAListDisplayed);
+  }
+
   const handleDisplayAddAList= e => {
     e.preventDefault();
-    setAddAListDisplayed(!addAListDisplayed);
+    toggleAddAList();
   }
 
   const handleSaveNewList = e => {
     e.preventDefault();
+    if (!newListTitle) {
+      return;
+    }
     dispatch(createList(newListTitle, id));
+    setNewListTitle('');
+    toggleAddAList();
   }
 
   if (board) {
