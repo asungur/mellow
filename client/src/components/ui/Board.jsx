@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getBoard } from "../../actions/BoardActions";
+import { createList } from "../../actions/ListActions";
 import ExistingLists from "./ExistingLists";
 
 const Board = () => {
   const id = useParams().id
   const dispatch = useDispatch();
+  const [ newListTitle, setNewListTitle ] = useState('');
+  const [ addAListDisplayed, setAddAListDisplayed ] = useState(false);
 
   const board = useSelector((state) => {
     return state.boards.find((board) => board._id === id);
@@ -15,12 +18,37 @@ const Board = () => {
   // const cards = useSelector((state) => {
   //   return state.cards.filter((card) => card.boardId === id)
   // })
+  // for POST /api/lists send { list: {} }
 
   useEffect(() => {
     if (id) {
       dispatch(getBoard(id));
     }
   }, [dispatch, id]);
+
+  const handleAddAListInput = e => {
+    e.preventDefault();
+    setNewListTitle(e.target.value);
+  }
+
+  const toggleAddAList = () => {
+    setAddAListDisplayed(!addAListDisplayed);
+  }
+
+  const handleDisplayAddAList= e => {
+    e.preventDefault();
+    toggleAddAList();
+  }
+
+  const handleSaveNewList = e => {
+    e.preventDefault();
+    if (!newListTitle) {
+      return;
+    }
+    dispatch(createList(newListTitle, id));
+    setNewListTitle('');
+    toggleAddAList();
+  }
 
   if (board) {
     return (
@@ -43,12 +71,12 @@ const Board = () => {
             <div id="existing-lists" className="existing-lists">
               <ExistingLists boardId={id}/>
             </div>
-            <div id="new-list" className="new-list">
-              <span>Add a list...</span>
-              <input type="text" placeholder="Add a list..." />
+            <div id="new-list" className={addAListDisplayed ? "new-list selected" : "new-list"}>
+              <span onClick={handleDisplayAddAList}>Add a list...</span>
+              <input type="text" placeholder="Add a list..." value={newListTitle} onChange={handleAddAListInput} />
               <div>
-                <input type="submit" className="button" value="Save" />
-                <i className="x-icon icon"></i>
+                <input onClick={handleSaveNewList} type="submit" className="button" value="Save" />
+                <i onClick={handleDisplayAddAList} className="x-icon icon"></i>
               </div>
             </div>
           </div>

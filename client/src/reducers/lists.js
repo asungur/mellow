@@ -16,6 +16,10 @@ export default function lists(state = [], action) {
 
       return newState;
     }
+    case "CREATE_LIST_SUCCESS": {
+      const newList = action.list;
+      return state.concat(newList);
+    }
     default:
       return state;
   }
