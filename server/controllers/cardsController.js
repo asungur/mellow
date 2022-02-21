@@ -15,12 +15,8 @@ const createCard = (req, res, next) => {
     console.log(req.body.card)
     Card.create(req.body.card)
       .then(card => {
-        List.findById(card.listId)
-          .then(list => {
-            list.cards.push(card._id)
-            list.save()
-            res.json({ card })
-          })
+        req.card = card;
+        next();
       })
       .catch(err => {
         console.log(err);
