@@ -6,6 +6,10 @@ export const getBoardUrl = (id) => {
   return `/api/boards/${id}`;
 };
 
+export const getCardUrl = (id) => {
+  return `/api/cards/${id}`;
+};
+
 export const editListUrl = (id) => {
   return `/api/lists/${id}`;
 };

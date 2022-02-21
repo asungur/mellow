@@ -53,6 +53,13 @@ const apiClient = {
       .then(response => response.data)
       .then(callback)
       .catch(logError)
+  },
+  getCard: function(id, callback) {
+    return axios
+      .get(routes.getCardUrl(id))
+      .then((response) => response.data)
+      .then(callback)
+      .catch(logError);
   }
 };
 

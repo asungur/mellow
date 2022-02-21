@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import cardReducer from "../../reducers/cards";
 import { updateList } from "../../actions/ListActions";
 import CardPreview from "./CardPreview";
 
@@ -67,7 +65,7 @@ const List = ({ list }) => {
           </div>
           <div id="cards-container" data-id="list-1-cards">
             {cards.map(card =>
-              <CardPreview key={card._id} content={card}/>
+              <CardPreview key={card._id} card={card}/>
             )}
           </div>
           <div className="add-dropdown add-bottom">

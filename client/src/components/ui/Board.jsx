@@ -6,7 +6,7 @@ import { createList } from "../../actions/ListActions";
 import ExistingLists from "./ExistingLists";
 
 const Board = () => {
-  const id = useParams().id
+  const id = useParams().id;
   const dispatch = useDispatch();
   const [ newListTitle, setNewListTitle ] = useState('');
   const [ addAListDisplayed, setAddAListDisplayed ] = useState(false);
@@ -15,15 +15,8 @@ const Board = () => {
     return state.boards.find((board) => board._id === id);
   });
 
-  // const cards = useSelector((state) => {
-  //   return state.cards.filter((card) => card.boardId === id)
-  // })
-  // for POST /api/lists send { list: {} }
-
   useEffect(() => {
-    if (id) {
-      dispatch(getBoard(id));
-    }
+    dispatch(getBoard(id));
   }, [dispatch, id]);
 
   const handleAddAListInput = e => {

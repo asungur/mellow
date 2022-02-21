@@ -27,7 +27,7 @@ const Application = () => {
         path="/ui/cardEditingDescription"
         component={CardEditingDescription}
       />
-      <Route path="/ui/card" component={Card} />
+      <Route path="/card/:id" component={Card} />
       <Route path="/ui/copyCardPopover" component={CopyCardPopover} />
       <Route path="/ui/createBoard" component={CreateBoard} />
       <Route path="/ui/dueDatePopover" component={DueDatePopover} />
