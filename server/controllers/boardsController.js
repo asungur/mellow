@@ -15,9 +15,13 @@ const createBoard = (req, res, next) => {
   if (errors.isEmpty()) {
     Board.create(req.body.board)
       .then((board) => {
-        Board.find({ _id: board._id }, "title _id createdAt updatedAt").then(
-          (board) => res.json({ board })
-        );
+        board = {
+          title: board.title,
+          _id: board._id,
+          createdAt: board.createdAt,
+          updatedAt: board.updatedAt
+        }
+        res.json({ board });
       })
       .catch((err) =>
         next(new HttpError("Creating board failed, please try again", 500))
@@ -41,6 +45,16 @@ const getBoard = (req, res, next) => {
     });
 };
 
+const addListToBoard = (req, res, next) => {
+  Board.findById(req.list.boardId)
+    .then(board => {
+      board.lists.push(req.list._id)
+      board.save()
+      res.json({ list: req.list})
+    })
+}
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
 exports.getBoard = getBoard;
+exports.addListToBoard = addListToBoard;

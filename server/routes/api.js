@@ -15,10 +15,13 @@ router.get('/boards/:id', boardsController.getBoard);
 router.get('/test', testController.test);
 
 router.post('/lists', validateList, listsController.createList, boardsController.addListToBoard);
+
 router.put('/lists/:id', validateList, listsController.updateList);
 
 router.get('/cards/:id', cardsController.getCard);
+
 router.post('/cards', validateCard, cardsController.createCard, listsController.addCardToList);
+
 router.put('/cards/:id', validateCard, cardsController.updateCard);
 router.delete('/cards/:id', cardsController.deleteCard);
 
