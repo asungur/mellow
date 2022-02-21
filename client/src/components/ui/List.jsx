@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 // import cardReducer from "../../reducers/cards";
+import { updateList } from "../../actions/ListActions";
 import CardPreview from "./CardPreview";
 
 const List = ({ list }) => {
+  const dispatch = useDispatch();
   const [ showEditListTitle, setShowEditListTitle ] = useState(false);
   const [ editTitle, setEditTitle ] = useState(list.title);
+
+  useEffect(() => {
+    setEditTitle(list.title);
+  }, [list.title])
 
   const handleChangeListTitle = e => {
     e.preventDefault();
@@ -18,11 +25,16 @@ const List = ({ list }) => {
   };
 
   const handleSaveNewTitle = () => {
-    console.log('hello');
+    dispatch(updateList({ id: list._id, title: editTitle }))
   };
 
   const handleKeyPress = e => {
+    e.stopPropagation()
     if (e.key === 'Enter') {
+      handleSaveNewTitle()
+      toggleEditTitle(e)
+    } else if (e.key === 'Escape') {
+      toggleEditTitle(e)
     }
   };
 
@@ -37,10 +49,10 @@ const List = ({ list }) => {
           <a className="more-icon sm-icon" href=""></a>
           <div>
             {showEditListTitle ?
-              <input className="list-title" 
+              <input className="list-title"
                 type="text" value={editTitle} onBlur={handleSaveNewTitle}
-                onChange={handleChangeListTitle} autoFocus={true} 
-                onKeyPress={handleKeyPress} />
+                onChange={handleChangeListTitle} autoFocus={true}
+                onKeyUp={handleKeyPress} />
               :
               <p className="list-title" onClick={toggleEditTitle}>{list.title}</p>
             }
