@@ -1,5 +1,4 @@
 const Card = require("../models/card");
-const List = require("../models/list");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
@@ -12,7 +11,6 @@ const getCard = (req, res, next) => {
 const createCard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    console.log(req.body.card)
     Card.create(req.body.card)
       .then(card => {
         List.findById(card.listId)
@@ -42,6 +40,24 @@ const updateCard = (req, res, next) => {
   }
 }
 
+const addCommentToCard = (req, res, next) => {
+  Card.findById(req.comment.cardId)
+  .then(card => {
+    card.comments.push(req.comment._id)
+    card.save()
+    res.json({ comment: req.comment })
+  })
+  .catch(err => next(new HttpError("Adding comment failed, please try again", 500)));
+}
+
+const deleteCard = (req, res, next) => {
+  Card.findByIdAndDelete(req.params.id)
+    .then(() => res.sendStatus(200))
+    .catch(err => next(new HttpError("Deleting card failed, please try again", 500)));
+}
+
 exports.createCard = createCard;
 exports.getCard = getCard;
 exports.updateCard = updateCard;
+exports.addCommentToCard = addCommentToCard;
+exports.deleteCard = deleteCard;
