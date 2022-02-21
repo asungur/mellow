@@ -25,6 +25,7 @@ const CardSchema = new Schema({
   position: {
     type: Number,
   },
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   commentsCount: Number,
 }, {timestamps: true})
 
