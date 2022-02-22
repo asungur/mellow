@@ -29,8 +29,7 @@ const List = ({ list }) => {
   const handleKeyPress = e => {
     e.stopPropagation()
     if (e.key === 'Enter') {
-      handleSaveNewTitle()
-      toggleEditTitle(e)
+      e.target.blur();
     } else if (e.key === 'Escape') {
       toggleEditTitle(e)
     }
@@ -52,7 +51,7 @@ const List = ({ list }) => {
                 onChange={handleChangeListTitle} autoFocus={true}
                 onKeyUp={handleKeyPress} />
               :
-              <p className="list-title" onClick={toggleEditTitle}>{list.title}</p>
+              <p className="list-title" onClick={toggleEditTitle}>{editTitle}</p>
             }
           </div>
           <div className="add-dropdown add-top">

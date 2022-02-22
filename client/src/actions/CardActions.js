@@ -9,7 +9,6 @@ export function getCard(id, callback) {
   return function(dispatch) {
     apiClient.getCard(id, (data) => {
       dispatch(getCardSuccess(data.card))
-
       if(callback) { callback(data) }
     });
   };

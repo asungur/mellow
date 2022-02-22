@@ -27,7 +27,8 @@ const Application = () => {
         path="/ui/cardEditingDescription"
         component={CardEditingDescription}
       />
-      <Route path="/card/:id" component={Card} />
+      <Route path="/(boards|cards)/:id" component={Board} />
+      <Route path="/cards/:cardId" component={Card} />
       <Route path="/ui/copyCardPopover" component={CopyCardPopover} />
       <Route path="/ui/createBoard" component={CreateBoard} />
       <Route path="/ui/dueDatePopover" component={DueDatePopover} />
@@ -35,7 +36,6 @@ const Application = () => {
       <Route path="/ui/moveCardPopover" component={MoveCardPopover} />
       <Route path="/ui/singleBoard" component={SingleBoard} />
       
-      <Route path="/boards/:id" component={Board} />
     </div>
   );
 };

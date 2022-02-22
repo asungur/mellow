@@ -1,37 +1,46 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
-// import { getBoard } from "../../actions/BoardActions";
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { getCard } from "../../actions/CardActions";
 // figure out rendering board behind the card
 
 const Card = () => {
   let dueDate;
   let datePassed = false;
-  const id = useParams().id;
+  const id = useParams().cardId;
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const card = useSelector(state => {
     return state.cards.find(card => card._id === id);
   })
+
   useEffect(() => {
     dispatch(getCard(id))
-  }, [dispatch, id])
+  }, [dispatch, id]);
 
   if (card) {
-    console.log(card)
     // Date to be updated
     dueDate = new Date(card.createdAt);
     datePassed = Date.now() > dueDate;
   }
 
+  const handleEscKey = e => {
+    console.log('here');
+    console.log(e.key);
+    if (e.key === 'Escape') {
+      history.push(`/boards/${card.boardId}`)
+    }
+  }
 
   if (card) {
     return (
-      <div id="modal-container">
+      <div id="modal-container" onKeyDown={handleEscKey}>
         <div className="screen"></div>
         <div id="modal">
-          <i className="x-icon icon close-modal"></i>
+          <Link to={`/boards/${card.boardId}`}>
+            <i className="x-icon icon close-modal"></i>
+          </Link>
           <header>
             <i className="card-icon icon .close-modal"></i>
             <textarea className="list-title" style={{ height: "45px" }}>

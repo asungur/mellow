@@ -7,7 +7,7 @@ const CardPreview = ({ card }) => {
 
   return (
     <div className="card-background">
-      <Link to={`/card/${card._id}`}>
+      <Link to={`/cards/${card._id}`}>
         <div className="card">
           <i className="edit-toggle edit-icon sm-icon"></i>
           <div className="card-info">
