@@ -10,7 +10,6 @@ const getCard = (req, res, next) => {
 }
 
 const createCard = (req, res, next) => {
-  console.log(req.body)
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     Card.create(req.body.card)
