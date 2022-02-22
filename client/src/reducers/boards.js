@@ -10,8 +10,8 @@ export default function boards(state = [], action) {
     case "GET_BOARD_SUCCESS": {
       const {lists, ...boardWithoutLists} = action.board
 
-      if (state.find(board => board._id === action.board._id)) {
-        return state.map(board => board._id === action.board._id ? boardWithoutLists : board);
+      if (state.find(board => board._id === boardWithoutLists._id)) {
+        return state.map(board => board._id === boardWithoutLists._id ? boardWithoutLists : board);
       }
       return state.concat(boardWithoutLists)
     }

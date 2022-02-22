@@ -4,27 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBoard } from "../../actions/BoardActions";
 import { createList } from "../../actions/ListActions";
 import ExistingLists from "./ExistingLists";
+import findBoardId from "../../lib/findBoardId";
 
 const Board = () => {
-  const id = useParams().id
+  const id = useParams().id;
   const dispatch = useDispatch();
   const [ newListTitle, setNewListTitle ] = useState('');
   const [ addAListDisplayed, setAddAListDisplayed ] = useState(false);
 
-  const board = useSelector((state) => {
-    return state.boards.find((board) => board._id === id);
-  });
-
-  // const cards = useSelector((state) => {
-  //   return state.cards.filter((card) => card.boardId === id)
-  // })
-  // for POST /api/lists send { list: {} }
+  const state = useSelector((state) => state);
+  const boardId = findBoardId(id, state);
+  const board = useSelector((state) => state.boards).find(b => b._id === boardId);
 
   useEffect(() => {
-    if (id) {
-      dispatch(getBoard(id));
-    }
-  }, [dispatch, id]);
+    if (!boardId) { return }
+    dispatch(getBoard(boardId));
+  }, [dispatch, boardId]);
 
   const handleAddAListInput = e => {
     e.preventDefault();
@@ -69,7 +64,7 @@ const Board = () => {
         <main>
           <div id="list-container" className="list-container">
             <div id="existing-lists" className="existing-lists">
-              <ExistingLists boardId={id}/>
+              <ExistingLists boardId={board._id}/>
             </div>
             <div id="new-list" className={addAListDisplayed ? "new-list selected" : "new-list"}>
               <span onClick={handleDisplayAddAList}>Add a list...</span>
