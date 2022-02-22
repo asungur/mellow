@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useHistory } from 'react-router-dom';
 import { getCard } from "../../actions/CardActions";
-// figure out rendering board behind the card
 
 const Card = () => {
   let dueDate;
@@ -25,18 +24,20 @@ const Card = () => {
     datePassed = Date.now() > dueDate;
   }
 
+  const exitModal = () => {
+    history.push(`/boards/${card.boardId}`)
+  }
+
   const handleEscKey = e => {
-    console.log('here');
-    console.log(e.key);
     if (e.key === 'Escape') {
-      history.push(`/boards/${card.boardId}`)
+      exitModal()
     }
   }
 
   if (card) {
     return (
-      <div id="modal-container" onKeyDown={handleEscKey}>
-        <div className="screen"></div>
+      <div id="modal-container" tabIndex={-1} onKeyUp={handleEscKey} >
+        <div className="screen" onClick={exitModal}></div>
         <div id="modal">
           <Link to={`/boards/${card.boardId}`}>
             <i className="x-icon icon close-modal"></i>
