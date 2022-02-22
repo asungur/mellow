@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateList } from "../../actions/ListActions";
 import CardPreview from "./CardPreview";
+import { addCard } from "../../actions/CardActions";
 
 const List = ({ list }) => {
   const dispatch = useDispatch();
+  const inputRef = useRef();
   const [ showEditListTitle, setShowEditListTitle ] = useState(false);
+  const [ showAddCardForm, setShowAddCardForm ] = useState(false);
   const [ editTitle, setEditTitle ] = useState(list.title);
+  const [ newCardTitle, setNewCardTitle ] = useState('');
 
   useEffect(() => {
+    inputRef.current.focus();
     setEditTitle(list.title);
-  }, [list.title])
+  }, [list.title, showAddCardForm])
 
   const handleChangeListTitle = e => {
     e.preventDefault();
@@ -35,12 +40,31 @@ const List = ({ list }) => {
     }
   };
 
+  const toggleAddCardForm = () => {
+    setShowAddCardForm(!showAddCardForm);
+  }
+
+  const resetAddCardForm = () => {
+    setNewCardTitle('');
+    toggleAddCardForm();
+  }
+
+  const handleAddCardInput = e => {
+    e.preventDefault();
+    setNewCardTitle(e.target.value);
+  }
+
+  const handleAddNewCard = e => {
+    e.preventDefault();
+    dispatch(addCard(newCardTitle, list._id, list.boardId, resetAddCardForm));
+  }
+
   const cards = useSelector(state => {
     return state.cards.filter(card => card.listId === list._id)
   });
 
   return (
-    <div className="list-wrapper" key={list._id}>
+    <div className={showAddCardForm ? "list-wrapper add-dropdown-active" : "list-wrapper"} key={list._id}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -67,19 +91,20 @@ const List = ({ list }) => {
               <CardPreview key={card._id} card={card}/>
             )}
           </div>
-          <div className="add-dropdown add-bottom">
+          <div className="add-dropdown add-bottom active-card">
             <div className="card">
               <div className="card-info"></div>
-              <textarea name="add-card"></textarea>
+              <textarea name="add-card" ref={inputRef} value={newCardTitle} 
+                onChange={handleAddCardInput}></textarea>
               <div className="members"></div>
             </div>
-            <a className="button">Add</a>
-            <i className="x-icon icon"></i>
+            <a className="button" onClick={handleAddNewCard}>Add</a>
+            <i className="x-icon icon" onClick={resetAddCardForm}></i>
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
-          <div className="add-card-toggle" data-position="bottom">
+          <div className="add-card-toggle" data-position="bottom" onClick={toggleAddCardForm}>
             Add a card...
           </div>
         </div>

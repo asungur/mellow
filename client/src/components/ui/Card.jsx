@@ -36,7 +36,7 @@ const Card = () => {
 
   if (card) {
     return (
-      <div id="modal-container" tabIndex={-1} onKeyUp={handleEscKey} >
+      <div id="modal-container" tabIndex={-1} onKeyUp={handleEscKey}>
         <div className="screen" onClick={exitModal}></div>
         <div id="modal">
           <Link to={`/boards/${card.boardId}`}>

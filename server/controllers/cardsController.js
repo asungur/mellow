@@ -10,9 +10,9 @@ const getCard = (req, res, next) => {
 }
 
 const createCard = (req, res, next) => {
+  console.log(req.body)
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    console.log(req.body.card)
     Card.create(req.body.card)
       .then(card => {
         req.card = card;
