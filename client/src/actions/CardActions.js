@@ -13,6 +13,10 @@ function updateCardSuccess(card) {
   return { type: types.UPDATE_CARD_SUCCESS, card: card };
 }
 
+function addCommentSuccess(comment) {
+  return { type: types.CREATE_COMMENT_SUCCESS, comment: comment}
+}
+
 export function getCard(id, callback) {
   return function(dispatch) {
     apiClient.getCard(id, (data) => {
@@ -36,6 +40,16 @@ export function updateCard(card) {
   return function(dispatch) {
     apiClient.updateCard(card.id, { card }, (data) => {
       dispatch(updateCardSuccess(data.card));
+    })
+  }
+}
+
+export function addComment(content, boardId, listId, cardId, callback) {
+  return function(dispatch) {
+    const newComment = { comment: { content, boardId, listId, cardId } }
+    apiClient.addComment(newComment, (data) => {
+      dispatch(addCommentSuccess(data.comment))
+      if (callback) { callback() }
     })
   }
 }

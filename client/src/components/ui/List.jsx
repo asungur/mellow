@@ -95,8 +95,7 @@ const List = ({ list, setActiveList, activeList }) => {
               <CardPreview key={card._id} card={card}/>
             )}
           </div>
-          {activeList === list._id ?
-            <div className="add-dropdown add-bottom active-card">
+          <div className={`add-dropdown add-bottom ${activeList === list._id ? 'active-card' : ''}`}>
               <div className="card">
                 <div className="card-info"></div>
                 <textarea name="add-card" ref={inputRef} value={newCardTitle} 
@@ -109,11 +108,9 @@ const List = ({ list, setActiveList, activeList }) => {
                 <span>...</span>
               </div>
             </div>
-            :
             <div className="add-card-toggle" data-position="bottom" onClick={toggleAddCardForm}>
               Add a card...
             </div>
-          }
         </div>
       </div>
     </div>

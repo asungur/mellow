@@ -1,6 +1,10 @@
 import React from "react";
 
-const LabelsPopover = () => {
+const LabelsPopover = ({ labels }) => {
+  const handleCreateLabel = () => {
+    console.log('created the label :)')
+  }
+
   return (
     <div className="popover labels">
       <div id="add-options-labels-dropdown">
@@ -16,57 +20,20 @@ const LabelsPopover = () => {
           />
           <div className="labels-search-results">
             <ul className="label-list">
-              <li>
-                <div className="green colorblindable" data-id="1">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background green"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="yellow colorblindable" data-id="2">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background yellow"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="orange colorblindable" data-id="3">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background orange"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="red colorblindable" data-id="4">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background red"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="purple colorblindable" data-id="5">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background purple"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="blue colorblindable" data-id="6">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background blue"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
+              {labels.map(label =>
+                <li key={label._id}>
+                  <div className={`${label.color} colorblindable`} data-id="1">
+                    {label.name}
+                    <i className="check-icon sm-icon"></i>
+                  </div>
+                  <div className={`label-background ${label.color}`}></div>
+                  <div className="label-background-overlay"></div>
+                  <i className="edit-icon icon not-implemented"></i>
+                </li>
+              )}
             </ul>
             <ul className="light-list">
-              <li className="not-implemented">Create a new label</li>
+              <li onClick={handleCreateLabel} className="not-implemented">Create a new label</li>
               <hr />
               <li className="toggleColorblind">
                 Enable color blind friendly mode.
