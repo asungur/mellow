@@ -4,6 +4,7 @@ import { useParams, Link, useHistory } from 'react-router-dom';
 import { getCard } from "../../actions/CardActions";
 import CardHeader from "./CardHeader";
 import LabelsPopover from "./LabelsPopover";
+import CardDescription from "./CardDescription"
 
 const Card = () => {
   let dueDate;
@@ -79,27 +80,16 @@ const Card = () => {
                         type="checkbox"
                         className="checkbox"
                         checked=""
+                        onChange={() => {}}
+                        value={''}
                       />
                       {dueDate && dueDate.toDateString()} <span>{datePassed && '(past due)'}</span>
                     </div>
                   </li>
                 </ul>
-                <form className="description">
-                  <p>Description</p>
-                  <span id="description-edit" className="link">
-                    Edit
-                  </span>
-                  <p className="textarea-overlay">
-                    Cards have a symbol to indicate if they contain a description.
-                  </p>
-                  <p id="description-edit-options" className="hidden">
-                    You have unsaved edits on this field.{" "}
-                    <span className="link">View edits</span> -{" "}
-                    <span className="link">Discard</span>
-                  </p>
-                </form>
+                <CardDescription card={card}/>
               </li>
-              {/* <li className="comment-section">
+              <li className="comment-section">
                 <h2 className="comment-icon icon">Add Comment</h2>
                 <div>
                   <div className="member-container">
@@ -213,7 +203,7 @@ const Card = () => {
                     </div>
                   </li>
                 </ul>
-              </li> */}
+              </li>
             </ul>
           </section>
           {/* <aside className="modal-buttons">

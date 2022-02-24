@@ -4,7 +4,7 @@ import { updateList } from "../../actions/ListActions";
 import CardPreview from "./CardPreview";
 import { addCard } from "../../actions/CardActions";
 
-const List = ({ list }) => {
+const List = ({ list, setActiveList, activeList }) => {
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [ showEditListTitle, setShowEditListTitle ] = useState(false);
@@ -13,8 +13,10 @@ const List = ({ list }) => {
   const [ newCardTitle, setNewCardTitle ] = useState('');
 
   useEffect(() => {
-    inputRef.current.focus();
-    setEditTitle(list.title);
+    if (activeList === list._id) {
+      inputRef.current.focus();
+      setEditTitle(list.title);
+    }
   }, [list.title, showAddCardForm])
 
   const handleChangeListTitle = e => {
@@ -41,12 +43,14 @@ const List = ({ list }) => {
   };
 
   const toggleAddCardForm = () => {
+    setActiveList(list._id);
     setShowAddCardForm(!showAddCardForm);
   }
 
   const resetAddCardForm = () => {
+    setActiveList(null);
     setNewCardTitle('');
-    toggleAddCardForm();
+    // toggleAddCardForm();
   }
 
   const handleAddCardInput = e => {
@@ -64,7 +68,7 @@ const List = ({ list }) => {
   });
 
   return (
-    <div className={showAddCardForm ? "list-wrapper add-dropdown-active" : "list-wrapper"} key={list._id}>
+    <div className={activeList === list._id ? "list-wrapper add-dropdown-active" : "list-wrapper"} key={list._id}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -91,22 +95,25 @@ const List = ({ list }) => {
               <CardPreview key={card._id} card={card}/>
             )}
           </div>
-          <div className="add-dropdown add-bottom active-card">
-            <div className="card">
-              <div className="card-info"></div>
-              <textarea name="add-card" ref={inputRef} value={newCardTitle} 
-                onChange={handleAddCardInput}></textarea>
-              <div className="members"></div>
+          {activeList === list._id ?
+            <div className="add-dropdown add-bottom active-card">
+              <div className="card">
+                <div className="card-info"></div>
+                <textarea name="add-card" ref={inputRef} value={newCardTitle} 
+                  onChange={handleAddCardInput}></textarea>
+                <div className="members"></div>
+              </div>
+              <a className="button" onClick={handleAddNewCard}>Add</a>
+              <i className="x-icon icon" onClick={resetAddCardForm}></i>
+              <div className="add-options">
+                <span>...</span>
+              </div>
             </div>
-            <a className="button" onClick={handleAddNewCard}>Add</a>
-            <i className="x-icon icon" onClick={resetAddCardForm}></i>
-            <div className="add-options">
-              <span>...</span>
+            :
+            <div className="add-card-toggle" data-position="bottom" onClick={toggleAddCardForm}>
+              Add a card...
             </div>
-          </div>
-          <div className="add-card-toggle" data-position="bottom" onClick={toggleAddCardForm}>
-            Add a card...
-          </div>
+          }
         </div>
       </div>
     </div>
