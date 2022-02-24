@@ -25,8 +25,13 @@ const CardSchema = new Schema({
   },
   position: {
     type: Number,
+    default: 0,
   },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  description: {
+    type: String,
+    default: '',  
+  },
   commentsCount: Number,
 }, {timestamps: true})
 
