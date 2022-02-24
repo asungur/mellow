@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useHistory } from 'react-router-dom';
 import { getCard } from "../../actions/CardActions";
+import CardHeader from "./CardHeader";
+import LabelsPopover from "./LabelsPopover";
 
 const Card = () => {
   let dueDate;
@@ -9,6 +11,11 @@ const Card = () => {
   const id = useParams().cardId;
   const dispatch = useDispatch();
   const history = useHistory();
+  const [showPopover, setShowPopover] = useState(false);
+
+  const togglePopover = () => {
+    setShowPopover(!showPopover)
+  }
 
   const card = useSelector(state => {
     return state.cards.find(card => card._id === id);
@@ -34,51 +41,35 @@ const Card = () => {
     }
   }
 
+  const handleShowAddLabelPopoever = (e) => {
+    e.stopPropagation();
+    togglePopover();
+  }
+
   if (card) {
     return (
       <div id="modal-container" tabIndex={-1} onKeyUp={handleEscKey}>
         <div className="screen" onClick={exitModal}></div>
-        <div id="modal">
+        <div id="modal" onClick={() => setShowPopover(false)}>
           <Link to={`/boards/${card.boardId}`}>
             <i className="x-icon icon close-modal"></i>
           </Link>
-          <header>
-            <i className="card-icon icon .close-modal"></i>
-            <textarea className="list-title" style={{ height: "45px" }}>
-              {card.title}
-            </textarea>
-            <p>
-              in list <a className="link">Stuff to try (this is a list)</a>
-              <i className="sub-icon sm-icon"></i>
-            </p>
-          </header>
+          <CardHeader card={card} />
           <section className="modal-main">
             <ul className="modal-outer-list">
               <li className="details-section">
                 <ul className="modal-details-list">
                   <li className="labels-section">
                     <h3>Labels</h3>
+                    {card.labels.map(label =>
+                      <div key={label._id} className="member-container">
+                        <div className={`${label.color} label colorblindable`}>{label.name}</div>
+                      </div>
+                    )}
                     <div className="member-container">
-                      <div className="green label colorblindable"></div>
+                      <i className="plus-icon sm-icon" onClick={handleShowAddLabelPopoever}></i>
                     </div>
-                    <div className="member-container">
-                      <div className="yellow label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="orange label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="blue label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="purple label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="red label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <i className="plus-icon sm-icon"></i>
-                    </div>
+                    {showPopover ? <LabelsPopover /> : null }
                   </li>
                   <li className="due-date-section">
                     <h3>Due Date</h3>

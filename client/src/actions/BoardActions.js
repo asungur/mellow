@@ -42,7 +42,7 @@ export function getBoard(id, callback) {
     apiClient.getBoard(id, (data) => {
       dispatch({ type: types.GET_BOARD_SUCCESS, board: data})
 
-      if (callback) {callback(data)}
+      if (callback) { callback(data) }
     })
   }
 }

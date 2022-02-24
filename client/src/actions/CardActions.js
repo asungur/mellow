@@ -9,11 +9,15 @@ function addCardSuccess(card) {
   return { type: types.ADD_CARD_SUCCESS, card: card };
 }
 
+function updateCardSuccess(card) {
+  return { type: types.UPDATE_CARD_SUCCESS, card: card };
+}
+
 export function getCard(id, callback) {
   return function(dispatch) {
     apiClient.getCard(id, (data) => {
       dispatch(getCardSuccess(data.card))
-      if(callback) { callback(data) }
+      if (callback) { callback(data.card) }
     });
   };
 }
@@ -26,4 +30,12 @@ export function addCard(title, listId, boardId, callback) {
       if (callback) { callback() }
     });
   };
+}
+
+export function updateCard(card) {
+  return function(dispatch) {
+    apiClient.updateCard(card.id, { card }, (data) => {
+      dispatch(updateCardSuccess(data.card));
+    })
+  }
 }

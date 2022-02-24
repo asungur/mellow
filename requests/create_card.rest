@@ -3,6 +3,6 @@ Content-Type: application/json
 
 {
   "card": {
-    "title": "Don't touch me108", "position": 1, "boardId": "620d46902ca44c3f8bdb76cc", "label": [], "listId": "620ff382fb1c206ef26a9116"
+    "title": "Don't touch me10815", "position": 1, "boardId": "620e7eacd7c1aa2580b5b791", "labels": [{"color": "red", "name": "pepper" }], "listId": "6213bd1ecee7d42c1ae3cc08"
   }
 }

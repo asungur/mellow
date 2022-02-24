@@ -9,7 +9,8 @@ const CardSchema = new Schema({
   dueDate: Date,
   labels: [
     {
-      type: String,
+      color: String,
+      name: String,
     }
   ],
   boardId: {

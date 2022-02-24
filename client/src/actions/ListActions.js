@@ -1,12 +1,25 @@
 import apiClient from "../lib/ApiClient";
 import * as types from "../constants/ActionTypes";
 
+
+function getListSuccess(list) {
+  return { type: types.GET_LIST_SUCCESS, list };
+}
+
 function createListSuccess(list) {
   return { type: types.CREATE_LIST_SUCCESS, list };
 }
 
 function updateListSuccess(list) {
   return { type: types.UPDATE_LIST_SUCCESS, list };
+}
+
+export function getList(listId) {
+  return function(dispatch) {
+    apiClient.getList(listId, data => {
+      dispatch(getListSuccess(data.list));
+    })
+  }
 }
 
 export function updateList(list) {

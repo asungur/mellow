@@ -11,6 +11,10 @@ export const getCardUrl = (id) => {
   return `/api/cards/${id}`;
 };
 
-export const editListUrl = (id) => {
+export const updateListUrl = (id) => {
   return `/api/lists/${id}`;
+};
+
+export const updateCardUrl = (id) => {
+  return `/api/cards/${id}`;
 };
