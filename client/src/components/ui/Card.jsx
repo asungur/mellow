@@ -3,21 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useHistory } from 'react-router-dom';
 import { getCard } from "../../actions/CardActions";
 import CardHeader from "./CardHeader";
-import LabelsPopover from "./LabelsPopover";
 import CardDescription from "./CardDescription"
 import CardComment from "./CardComment"
+import Labels from "./Labels"
+import DueDate from "./DueDate"
 
 const Card = () => {
-  let dueDate;
-  let datePassed = false;
   const id = useParams().cardId;
   const dispatch = useDispatch();
   const history = useHistory();
   const [showPopover, setShowPopover] = useState(false);
-
-  const togglePopover = () => {
-    setShowPopover(!showPopover)
-  }
 
   const card = useSelector(state => {
     return state.cards.find(card => card._id === id);
@@ -26,12 +21,6 @@ const Card = () => {
   useEffect(() => {
     dispatch(getCard(id))
   }, [dispatch, id]);
-
-  if (card) {
-    // Date to be updated
-    dueDate = new Date(card.createdAt);
-    datePassed = Date.now() > dueDate;
-  }
 
   const exitModal = () => {
     history.push(`/boards/${card.boardId}`)
@@ -45,7 +34,7 @@ const Card = () => {
 
   const handleShowAddLabelPopoever = (e) => {
     e.stopPropagation();
-    togglePopover();
+    setShowPopover(!showPopover)
   }
 
   if (card) {
@@ -61,32 +50,8 @@ const Card = () => {
             <ul className="modal-outer-list">
               <li className="details-section">
                 <ul className="modal-details-list">
-                  <li className="labels-section">
-                    <h3>Labels</h3>
-                    {card.labels.map(label =>
-                      <div key={label._id} className="member-container">
-                        <div className={`${label.color} label colorblindable`}>{label.name}</div>
-                      </div>
-                    )}
-                    <div className="member-container">
-                      <i className="plus-icon sm-icon" onClick={handleShowAddLabelPopoever}></i>
-                    </div>
-                    {showPopover ? <LabelsPopover labels={card.labels}/> : null }
-                  </li>
-                  <li className="due-date-section">
-                    <h3>Due Date</h3>
-                    <div id="dueDateDisplay" className="overdue completed">
-                      <input
-                        id="dueDateCheckbox"
-                        type="checkbox"
-                        className="checkbox"
-                        checked=""
-                        onChange={() => {}}
-                        value={''}
-                      />
-                      {dueDate && dueDate.toDateString()} <span>{datePassed && '(past due)'}</span>
-                    </div>
-                  </li>
+                  <Labels card={card} showPopover={showPopover} handleLabelPopOver={handleShowAddLabelPopoever} />
+                  <DueDate card={card} />
                 </ul>
                 <CardDescription card={card}/>
               </li>
