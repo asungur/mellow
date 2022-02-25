@@ -64,7 +64,7 @@ const List = ({ list, setActiveList, activeList }) => {
   }
 
   const cards = useSelector(state => {
-    return state.cards.filter(card => card.listId === list._id && card.archived == false)
+    return state.cards.filter(card => card.listId === list._id && !card.archived)
   });
 
   return (

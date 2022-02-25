@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 
 const CardPreview = ({ card }) => {
   // Date to be updated
-  const dueDate = new Date(card.createdAt)
+  let dueDate;
+  if (card.dueDate) {
+    dueDate = new Date(card.dueDate)
+  }
 
   return (
     <div className="card-background">
@@ -19,9 +22,11 @@ const CardPreview = ({ card }) => {
             </p>
           </div>
           <div className="card-icons">
-            <i className="clock-icon sm-icon overdue-recent completed">
-              {dueDate && dueDate.toDateString()}
-            </i>
+            {dueDate &&
+              <i className="clock-icon sm-icon overdue-recent completed">
+                {dueDate.toDateString()}
+              </i>
+            }
             <i className="description-icon sm-icon"></i>
             <i className="comment-icon sm-icon"></i>
           </div>
