@@ -1,8 +1,21 @@
 import React from "react";
+import { updateCard } from "../../actions/CardActions";
+import { useDispatch } from "react-redux";
 
-const LabelsPopover = ({ labels }) => {
-  const handleCreateLabel = () => {
-    console.log('created the label :)')
+const LabelsPopover = ({ card }) => {
+  const labels = ["green", "yellow", "orange", "red", "purple", "blue"]
+  const dispatch = useDispatch();
+
+  const handleToggleLabel = (e) => {
+    let selectedColor = labels[Number(e.target.parentElement.getAttribute('data-id'))];
+    let colorExists = card.labels.includes(selectedColor)
+    let newLabels;
+    if (colorExists) {
+      newLabels = card.labels.filter(l => l !== selectedColor)
+    } else {
+      newLabels = [...card.labels, selectedColor]
+    }
+    dispatch(updateCard({ id: card._id, title: card.title, labels: newLabels }))
   }
 
   return (
@@ -20,20 +33,19 @@ const LabelsPopover = ({ labels }) => {
           />
           <div className="labels-search-results">
             <ul className="label-list">
-              {labels.map(label =>
-                <li key={label._id}>
-                  <div className={`${label.color} colorblindable`} data-id="1">
-                    {label.name}
-                    <i className="check-icon sm-icon"></i>
+              {labels.map((label, i) =>
+                <li key={label}>
+                  <div className={`${label} colorblindable`} data-id={i}>
+                    <i className="check-icon sm-icon" onClick={handleToggleLabel} ></i>
                   </div>
-                  <div className={`label-background ${label.color}`}></div>
+                  <div className={`label-background ${label}`}></div>
                   <div className="label-background-overlay"></div>
                   <i className="edit-icon icon not-implemented"></i>
                 </li>
               )}
             </ul>
             <ul className="light-list">
-              <li onClick={handleCreateLabel} className="not-implemented">Create a new label</li>
+              <li >Create a new label</li>
               <hr />
               <li className="toggleColorblind">
                 Enable color blind friendly mode.

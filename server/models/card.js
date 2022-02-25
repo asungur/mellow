@@ -7,12 +7,7 @@ const CardSchema = new Schema({
     required: [true, 'The Board title is required']
   },
   dueDate: Date,
-  labels: [
-    {
-      color: String,
-      name: String,
-    }
-  ],
+  labels: [String],
   boardId: {
     type: Schema.Types.ObjectId,
     ref: 'Board',

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addComment } from "../../actions/CardActions";
+import CommentList from "./CommenList"
 
 const CardComment = ({ card }) => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const CardComment = ({ card }) => {
               <div>
                 <input
                   type="submit"
-                  className="button not-implemented"
+                  className="button"
                   value="Save"
                   onClick={handleSaveComment}
                 />
@@ -72,9 +73,13 @@ const CardComment = ({ card }) => {
           </small>
           <div className="comment">
             <label>
-              <textarea value="activies" required="" rows="1">
+              {/* <textarea
+                value="activies"
+                required=""
+                rows="1"
+              >
                 The activities have not been implemented yet.
-              </textarea>
+              </textarea> */}
               <div>
                 <a className="light-button card-icon sm-icon"></a>
                 <a className="light-button smiley-icon sm-icon"></a>
@@ -101,40 +106,9 @@ const CardComment = ({ card }) => {
             background of this board <small>yesterday at 4:53 PM</small>
           </p>
         </li>
-        <li className="activity-comment">
-          <div className="member-container">
-            <div className="card-member">VR</div>
-          </div>
-          <h3>Victor Reyes</h3>
-          <div className="comment static-comment">
-            <span>Example of a comment.</span>
-          </div>
-          <small>
-            22 minutes ago - <span className="link">Edit</span> -{" "}
-            <span className="link">Delete</span>
-          </small>
-          <div className="comment">
-            <label>
-              <textarea required="" rows="1">
-                Example of a comment.
-              </textarea>
-              <div>
-                <a className="light-button card-icon sm-icon"></a>
-                <a className="light-button smiley-icon sm-icon"></a>
-                <a className="light-button email-icon sm-icon"></a>
-              </div>
-              <div>
-                <p>You haven&apos;t typed anything!</p>
-                <input
-                  type="submit"
-                  className="button not-implemented"
-                  value="Save"
-                />
-                <i className="x-icon icon"></i>
-              </div>
-            </label>
-          </div>
-        </li>
+        {card.comments.length > 0 &&
+          <CommentList />
+        }
       </ul>
     </li>
   </>

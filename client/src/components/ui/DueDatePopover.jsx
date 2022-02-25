@@ -3,6 +3,9 @@ import Pikaday from "pikaday";
 import moment from "moment";
 
 class DueDatePopover extends React.Component {
+  // picker should be in useEffect
+  // use useRef to reference the date input
+
   componentDidMount() {
     this.picker = new Pikaday({
       field: document.querySelector(".datepicker-select-date input"),
@@ -51,7 +54,7 @@ class DueDatePopover extends React.Component {
   }
   render() {
     return (
-      <div className="popover due-date">
+      <div className="popover due-date" style={{padding: "8px"}}>
         <header>
           <span>Change due date</span>
           <a href="#" className="icon-sm icon-close"></a>

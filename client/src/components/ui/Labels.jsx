@@ -7,14 +7,15 @@ const Labels = ({ card, handleLabelPopOver, showPopover }) => {
     <li className="labels-section">
       <h3>Labels</h3>
       {card.labels.map(label =>
-        <div key={label._id} className="member-container">
-          <div className={`${label.color} label colorblindable`}>{label.name}</div>
+        <div key={label} className="member-container">
+          <div className={`${label} label colorblindable`}>
+          </div>
         </div>
       )}
       <div className="member-container">
         <i className="plus-icon sm-icon" onClick={handleLabelPopOver}></i>
       </div>
-      {showPopover ? <LabelsPopover labels={card.labels}/> : null }
+      {showPopover ? <LabelsPopover card={card} /> : null }
     </li>
   )
 }

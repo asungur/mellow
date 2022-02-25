@@ -58,7 +58,7 @@ const Card = () => {
               <CardComment card={card} />
             </ul>
           </section>
-          {/* <aside className="modal-buttons">
+          <aside className="modal-buttons">
             <h2>Add</h2>
             <ul>
               <li className="member-button">
@@ -97,7 +97,7 @@ const Card = () => {
             <ul className="light-list">
               <li className="not-implemented">Share and more...</li>
             </ul>
-          </aside> */}
+          </aside>
         </div>
       </div>
     );
