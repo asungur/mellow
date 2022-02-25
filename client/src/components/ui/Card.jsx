@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useHistory } from 'react-router-dom';
-import { getCard } from "../../actions/CardActions";
+import { getCard, updateCard } from "../../actions/CardActions";
 import CardHeader from "./CardHeader";
 import CardDescription from "./CardDescription"
 import CardComment from "./CardComment"
@@ -35,6 +35,10 @@ const Card = () => {
   const handleShowAddLabelPopoever = (e) => {
     e.stopPropagation();
     setShowPopover(!showPopover)
+  }
+
+  const handleArchive = () => {
+    dispatch(updateCard({ id: card._id, title: card.title, archived: true }))
   }
 
   if (card) {
@@ -90,7 +94,7 @@ const Card = () => {
                 <i className="check-icon sm-icon"></i>
               </li>
               <hr />
-              <li className="archive-button">
+              <li className="archive-button" onClick={handleArchive}>
                 <i className="file-icon sm-icon "></i>Archive
               </li>
             </ul>

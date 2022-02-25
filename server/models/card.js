@@ -27,6 +27,10 @@ const CardSchema = new Schema({
     type: String,
     default: '',  
   },
+  archived: {
+    type: Boolean,
+    default: false,
+  },
   commentsCount: Number,
 }, {timestamps: true})
 
