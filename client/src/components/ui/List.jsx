@@ -68,50 +68,48 @@ const List = ({ list, setActiveList, activeList }) => {
   });
 
   return (
-    <div className={activeList === list._id ? "list-wrapper add-dropdown-active" : "list-wrapper"} key={list._id}>
-      <div className="list-background">
-        <div className="list">
-          <a className="more-icon sm-icon" href=""></a>
-          <div>
-            {showEditListTitle ?
-              <input className="list-title"
-                type="text" value={editTitle} onBlur={handleSaveNewTitle}
-                onChange={handleChangeListTitle} autoFocus={true}
-                onKeyUp={handleKeyPress} />
-              :
-              <p className="list-title" onClick={toggleEditTitle}>{editTitle}</p>
-            }
+    <div className="list-background">
+      <div className="list">
+        <a className="more-icon sm-icon" href=""></a>
+        <div>
+          {showEditListTitle ?
+            <input className="list-title"
+              type="text" value={editTitle} onBlur={handleSaveNewTitle}
+              onChange={handleChangeListTitle} autoFocus={true}
+              onKeyUp={handleKeyPress} />
+            :
+            <p className="list-title" onClick={toggleEditTitle}>{editTitle}</p>
+          }
+        </div>
+        <div className="add-dropdown add-top">
+          <div className="card"></div>
+          <a className="button">Add</a>
+          <i className="x-icon icon"></i>
+          <div className="add-options">
+            <span>...</span>
           </div>
-          <div className="add-dropdown add-top">
-            <div className="card"></div>
-            <a className="button">Add</a>
-            <i className="x-icon icon"></i>
+        </div>
+        <div id="cards-container" data-id="list-1-cards">
+          {cards.map(card =>
+            <CardPreview key={card._id} card={card}/>
+          )}
+        </div>
+        <div className={`add-dropdown add-bottom ${activeList === list._id ? 'active-card' : ''}`}>
+            <div className="card">
+              <div className="card-info"></div>
+              <textarea name="add-card" ref={inputRef} value={newCardTitle}
+                onChange={handleAddCardInput}></textarea>
+              <div className="members"></div>
+            </div>
+            <a className="button" onClick={handleAddNewCard}>Add</a>
+            <i className="x-icon icon" onClick={resetAddCardForm}></i>
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
-          <div id="cards-container" data-id="list-1-cards">
-            {cards.map(card =>
-              <CardPreview key={card._id} card={card}/>
-            )}
+          <div className="add-card-toggle" data-position="bottom" onClick={toggleAddCardForm}>
+            Add a card...
           </div>
-          <div className={`add-dropdown add-bottom ${activeList === list._id ? 'active-card' : ''}`}>
-              <div className="card">
-                <div className="card-info"></div>
-                <textarea name="add-card" ref={inputRef} value={newCardTitle} 
-                  onChange={handleAddCardInput}></textarea>
-                <div className="members"></div>
-              </div>
-              <a className="button" onClick={handleAddNewCard}>Add</a>
-              <i className="x-icon icon" onClick={resetAddCardForm}></i>
-              <div className="add-options">
-                <span>...</span>
-              </div>
-            </div>
-            <div className="add-card-toggle" data-position="bottom" onClick={toggleAddCardForm}>
-              Add a card...
-            </div>
-        </div>
       </div>
     </div>
   )

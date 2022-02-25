@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import DraggableList from "./DraggableList";
 import List from "./List";
 
 const ExistingLists = ({ boardId }) => {
@@ -12,7 +13,7 @@ const ExistingLists = ({ boardId }) => {
   return (
     <>
       {lists.map(list =>
-        <List
+        <DraggableList
           key={list._id}
           list={list}
           setActiveList={setActiveList}
