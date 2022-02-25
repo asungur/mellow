@@ -7,11 +7,7 @@ const CardSchema = new Schema({
     required: [true, 'The Board title is required']
   },
   dueDate: Date,
-  labels: [
-    {
-      type: String,
-    }
-  ],
+  labels: [String],
   boardId: {
     type: Schema.Types.ObjectId,
     ref: 'Board',
@@ -24,8 +20,17 @@ const CardSchema = new Schema({
   },
   position: {
     type: Number,
+    default: 0,
   },
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  description: {
+    type: String,
+    default: '',  
+  },
+  archived: {
+    type: Boolean,
+    default: false,
+  },
   commentsCount: Number,
 }, {timestamps: true})
 

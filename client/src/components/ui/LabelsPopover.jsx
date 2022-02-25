@@ -1,5 +1,23 @@
 import React from "react";
-const LabelsPopover = () => {
+import { updateCard } from "../../actions/CardActions";
+import { useDispatch } from "react-redux";
+
+const LabelsPopover = ({ card }) => {
+  const labels = ["green", "yellow", "orange", "red", "purple", "blue"]
+  const dispatch = useDispatch();
+
+  const handleToggleLabel = (e) => {
+    let selectedColor = labels[Number(e.target.parentElement.getAttribute('data-id'))];
+    let colorExists = card.labels.includes(selectedColor)
+    let newLabels;
+    if (colorExists) {
+      newLabels = card.labels.filter(l => l !== selectedColor)
+    } else {
+      newLabels = [...card.labels, selectedColor]
+    }
+    dispatch(updateCard({ id: card._id, title: card.title, labels: newLabels }))
+  }
+
   return (
     <div className="popover labels">
       <div id="add-options-labels-dropdown">
@@ -15,57 +33,19 @@ const LabelsPopover = () => {
           />
           <div className="labels-search-results">
             <ul className="label-list">
-              <li>
-                <div className="green colorblindable" data-id="1">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background green"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="yellow colorblindable" data-id="2">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background yellow"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="orange colorblindable" data-id="3">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background orange"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="red colorblindable" data-id="4">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background red"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="purple colorblindable" data-id="5">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background purple"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
-              <li>
-                <div className="blue colorblindable" data-id="6">
-                  <i className="check-icon sm-icon"></i>
-                </div>
-                <div className="label-background blue"></div>
-                <div className="label-background-overlay"></div>
-                <i className="edit-icon icon not-implemented"></i>
-              </li>
+              {labels.map((label, i) =>
+                <li key={label}>
+                  <div className={`${label} colorblindable`} data-id={i}>
+                    <i className="check-icon sm-icon" onClick={handleToggleLabel} ></i>
+                  </div>
+                  <div className={`label-background ${label}`}></div>
+                  <div className="label-background-overlay"></div>
+                  <i className="edit-icon icon not-implemented"></i>
+                </li>
+              )}
             </ul>
             <ul className="light-list">
-              <li className="not-implemented">Create a new label</li>
+              <li >Create a new label</li>
               <hr />
               <li className="toggleColorblind">
                 Enable color blind friendly mode.

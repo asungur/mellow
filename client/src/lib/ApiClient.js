@@ -49,7 +49,7 @@ const apiClient = {
   },
   updateList: function(id, updatedList, callback) {
     return axios
-      .put(routes.editListUrl(id), updatedList)
+      .put(routes.updateListUrl(id), updatedList)
       .then(response => response.data)
       .then(callback)
       .catch(logError)
@@ -67,7 +67,21 @@ const apiClient = {
       .then(response => response.data)
       .then(callback)
       .catch(logError);
-  }
+  },
+  updateCard: function(id, updatedCard, callback) {
+    return axios
+      .put(routes.updateCardUrl(id), updatedCard)
+      .then(response => response.data)
+      .then(callback)
+      .catch(logError)
+  },
+  addComment: function(newComment, callback) {
+    return axios
+      .post(routes.CREATE_COMMENT_URL, newComment)
+      .then(response => response.data)
+      .then(callback)
+      .catch(logError);
+  },
 };
 
 export default apiClient;
